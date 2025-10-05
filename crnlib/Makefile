@@ -1,96 +1,98 @@
-COMPILE_OPTIONS = -O3 -fomit-frame-pointer -ffast-math -fno-math-errno -g -fno-strict-aliasing -Wall -Wno-unused-value -Wno-unused -march=core2
-LINKER_OPTIONS = -lpthread -g
+crnlib_cpp := \
+	crnlib.cpp \
+	crn_arealist.cpp \
+	crn_assert.cpp \
+	crn_checksum.cpp \
+	crn_colorized_console.cpp \
+	crn_command_line_params.cpp \
+	crn_comp.cpp \
+	crn_console.cpp \
+	crn_core.cpp \
+	crn_data_stream.cpp \
+	crn_dds_comp.cpp \
+	crn_decomp.cpp \
+	crn_dxt.cpp \
+	crn_dxt1.cpp \
+	crn_dxt5a.cpp \
+	crn_dxt_endpoint_refiner.cpp \
+	crn_dxt_fast.cpp \
+	crn_dxt_hc.cpp \
+	crn_dxt_hc_common.cpp \
+	crn_dxt_image.cpp \
+	crn_dynamic_string.cpp \
+	crn_etc.cpp \
+	crn_file_utils.cpp \
+	crn_find_files.cpp \
+	crn_hash.cpp \
+	crn_hash_map.cpp \
+	crn_huffman_codes.cpp \
+	crn_image_utils.cpp \
+	crn_jpgd.cpp \
+	crn_jpge.cpp \
+	crn_ktx_texture.cpp \
+	crn_lzma_codec.cpp \
+	crn_math.cpp \
+	crn_mem.cpp \
+	crn_miniz.cpp \
+	crn_mipmapped_texture.cpp \
+	crn_pixel_format.cpp \
+	crn_platform.cpp \
+	crn_prefix_coding.cpp \
+	crn_qdxt1.cpp \
+	crn_qdxt5.cpp \
+	crn_rand.cpp \
+	crn_resampler.cpp \
+	crn_resample_filters.cpp \
+	crn_rg_etc1.cpp \
+	crn_ryg_dxt.cpp \
+	crn_sparse_bit_array.cpp \
+	crn_stb_image.cpp \
+	crn_strutils.cpp \
+	crn_symbol_codec.cpp \
+	crn_texture_comp.cpp \
+	crn_texture_conversion.cpp \
+	crn_texture_file_types.cpp \
+	crn_threaded_resampler.cpp \
+	crn_threading_win32.cpp \
+	crn_timer.cpp \
+	crn_utils.cpp \
+	crn_value.cpp \
+	crn_vector.cpp \
+	crn_zeng.cpp \
+	lzma_7zBuf.cpp \
+	lzma_7zBuf2.cpp \
+	lzma_7zCrc.cpp \
+	lzma_7zFile.cpp \
+	lzma_7zStream.cpp \
+	lzma_Alloc.cpp \
+	lzma_Bcj2.cpp \
+	lzma_Bra.cpp \
+	lzma_Bra86.cpp \
+	lzma_BraIA64.cpp \
+	lzma_LzFind.cpp \
+	lzma_LzFindMt.cpp \
+	lzma_LzmaDec.cpp \
+	lzma_LzmaEnc.cpp \
+	lzma_LzmaLib.cpp \
+	lzma_Threads.cpp
 
-OBJECTS = \
-  crn_arealist.o \
-  crn_assert.o \
-  crn_checksum.o \
-  crn_colorized_console.o \
-  crn_command_line_params.o \
-  crn_comp.o \
-  crn_console.o \
-  crn_core.o \
-  crn_data_stream.o \
-  crn_mipmapped_texture.o \
-  crn_decomp.o \
-  crn_dxt1.o \
-  crn_dxt5a.o \
-  crn_dxt.o \
-  crn_dxt_endpoint_refiner.o \
-  crn_dxt_fast.o \
-  crn_dxt_hc_common.o \
-  crn_dxt_hc.o \
-  crn_dxt_image.o \
-  crn_dynamic_string.o \
-  crn_file_utils.o \
-  crn_find_files.o \
-  crn_hash.o \
-  crn_hash_map.o \
-  crn_huffman_codes.o \
-  crn_image_utils.o \
-  crnlib.o \
-  crn_math.o \
-  crn_mem.o \
-  crn_pixel_format.o \
-  crn_platform.o \
-  crn_prefix_coding.o \
-  crn_qdxt1.o \
-  crn_qdxt5.o \
-  crn_rand.o \
-  crn_resample_filters.o \
-  crn_resampler.o \
-  crn_ryg_dxt.o \
-  crn_sparse_bit_array.o \
-  crn_stb_image.o \
-  crn_strutils.o \
-  crn_symbol_codec.o \
-  crn_texture_file_types.o \
-  crn_threaded_resampler.o \
-  crn_threading_pthreads.o \
-  crn_timer.o \
-  crn_utils.o \
-  crn_value.o \
-  crn_vector.o \
-  crn_zeng.o \
-  crn_texture_comp.o \
-  crn_texture_conversion.o \
-  crn_dds_comp.o \
-  crn_lzma_codec.o \
-  crn_ktx_texture.o \
-  crn_etc.o \
-  crn_rg_etc1.o \
-  crn_miniz.o \
-  crn_jpge.o \
-  crn_jpgd.o \
-  lzma_7zBuf2.o \
-  lzma_7zBuf.o \
-  lzma_7zCrc.o \
-  lzma_7zFile.o \
-  lzma_7zStream.o \
-  lzma_Alloc.o \
-  lzma_Bcj2.o \
-  lzma_Bra86.o \
-  lzma_Bra.o \
-  lzma_BraIA64.o \
-  lzma_LzFind.o \
-  lzma_LzmaDec.o \
-  lzma_LzmaEnc.o \
-  lzma_LzmaLib.o
+crnlib_obj := $(crnlib_cpp:.cpp=.obj)
 
-all: crunch
+crnlib_lib := crnlib.lib
 
-%.o: %.cpp
-	g++ $< -o $@ -c $(COMPILE_OPTIONS)
+$(crnlib_obj): $(crnlib_cpp)
+	cl /nologo /MT /TP /O2 /c /DWIN32 /DNDEBUG /D_LIB /FIcrn_core.h /I..\inc $^
 
-crunch.o: ../crunch/crunch.cpp
-	g++ $< -o $@ -c -I../inc -I../crnlib $(COMPILE_OPTIONS)
+$(crnlib_lib): $(crnlib_obj)
+	lib /nologo $^ /out:$(crnlib_lib)
 
-corpus_gen.o: ../crunch/corpus_gen.cpp
-	g++ $< -o $@ -c -I../inc -I../crnlib $(COMPILE_OPTIONS)
+.PHONY: clean
+clean:
+	del $(crnlib_obj) $(crnlib_lib)
 
-corpus_test.o: ../crunch/corpus_test.cpp
-	g++ $< -o $@ -c -I../inc -I../crnlib $(COMPILE_OPTIONS)
+.PHONY: distclean
+distclean:
+	del $(crnlib_obj)
 
-crunch: $(OBJECTS) crunch.o corpus_gen.o corpus_test.o
-	g++ $(OBJECTS) crunch.o corpus_gen.o corpus_test.o -o crunch $(LINKER_OPTIONS)
-
+.PHONY: all
+all: $(crnlib_lib)
